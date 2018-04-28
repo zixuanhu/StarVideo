@@ -77,37 +77,11 @@ class Gallery extends React.Component {
         let videos = [];
         for (let i = 0; i < this.props.videos.length; i++) {
             const video = this.props.videos[i];
-            //debugger;
-            if (!isEmpty(this.state.mouseOverVideo)) {
-                if (this.state.mouseOverVideo.id.videoId === video.id.videoId) {
-                    videos.push(
-                        <div
-                            key={i}
-                            className="col-sm-6 col-md-4 gallery-card"
-                            onClick={e => this.submitChange(video)}
-                        >
-                            <div onMouseOver={e => this.MouseOver(video)}>
-                                <img
-                                    src={video.snippet.thumbnails.default.url}
-                                    alt="video img"
-                                />
-                            </div>
-                            <div className="gallery-card-right">
-                                <h3>{video.snippet.channelTitle}</h3>
-                                <Moment fromNow>
-                                    {video.snippet.publishedAt}
-                                </Moment>
-                            </div>
-                        </div>
-                    );
-                    continue;
-                }
-            }
 
             videos.push(
                 <div
                     key={i}
-                    className="col-sm-6 col-md-4 gallery-card"
+                    className="col-sm-6 col-md-4 gallery-card btn"
                     onClick={e => this.submitChange(video)}
                 >
                     <div>
@@ -154,10 +128,10 @@ class Gallery extends React.Component {
                     <hr />
                     <br />
                     <ul className="pager">
-                        <li className="previous">
+                        <li className="previous btn">
                             <a onClick={e => this.onForwardPage(e)}>Previous</a>
                         </li>
-                        <li className="next">
+                        <li className="next btn">
                             <a onClick={e => this.onNextPage(e)}>Next</a>
                         </li>
                     </ul>

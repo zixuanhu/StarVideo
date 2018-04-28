@@ -183,7 +183,7 @@ class Player extends React.Component {
             return (
                 <div
                     key={i}
-                    className="col-sm-6 col-md-4 playergallery-card"
+                    className="col-sm-6 col-md-4 playergallery-card btn"
                     onClick={e => this.submitChange(video)}
                 >
                     <div onMouseOver={e => this.MouseOver(video)}>
@@ -193,8 +193,12 @@ class Player extends React.Component {
                         />
                     </div>
                     <div>
-                        <p id="h3"> {video.snippet.channelTitle} </p>
-                        <Moment fromNow>{video.snippet.publishedAt}</Moment>
+                        <div id="h3"> {video.snippet.channelTitle} </div>
+                        <hr />
+                        <br />
+                        <div id="time">
+                            <Moment fromNow>{video.snippet.publishedAt}</Moment>
+                        </div>
                     </div>
                 </div>
             );
