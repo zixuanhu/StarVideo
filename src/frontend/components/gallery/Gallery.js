@@ -81,7 +81,7 @@ class Gallery extends React.Component {
             videos.push(
                 <div
                     key={i}
-                    className="col-sm-6 col-md-4 gallery-card btn"
+                    className="col-sm-6 col-md-4 gallery-card btn thumbnail"
                     onClick={e => this.submitChange(video)}
                 >
                     <div>
@@ -99,49 +99,59 @@ class Gallery extends React.Component {
         }
         return videos;
     }
+    searchBar() {
+        return (
+            <div className="input-group">
+                <input
+                    type="text"
+                    className="form-control search-input"
+                    onChange={e => this.updateKeywords(e)}
+                    value={this.state.keywords}
+                    onKeyDown={e => this.keyDown(e)}
+                />
+                <span className="input-group-btn">
+                    <button
+                        className="btn btn-default"
+                        type="button"
+                        onClick={e => this.submitSearchChange(e)}
+                    >
+                        Search
+                    </button>
+                </span>
+            </div>
+        );
+    }
+    pager() {
+        return (
+            <ul className="pager">
+                <li className="previous btn">
+                    <a onClick={e => this.onForwardPage(e)}>Previous</a>
+                </li>
+                <li className="next btn">
+                    <a onClick={e => this.onNextPage(e)}>Next</a>
+                </li>
+            </ul>
+        );
+    }
 
     render() {
         return (
             <div className="container">
-                <div className="input-group">
-                    <input
-                        type="text"
-                        className="form-control search-input"
-                        onChange={e => this.updateKeywords(e)}
-                        value={this.state.keywords}
-                        onKeyDown={e => this.keyDown(e)}
-                    />
-                    <span className="input-group-btn">
-                        <button
-                            className="btn btn-default"
-                            type="button"
-                            onClick={e => this.submitSearchChange(e)}
-                        >
-                            Search
-                        </button>
-                    </span>
-                </div>
-
-                <br />
-                <hr />
-                <div className="container">
+                <div>
+                    {this.searchBar()}
                     <hr />
-                    <br />
-                    <ul className="pager">
-                        <li className="previous btn">
-                            <a onClick={e => this.onForwardPage(e)}>Previous</a>
-                        </li>
-                        <li className="next btn">
-                            <a onClick={e => this.onNextPage(e)}>Next</a>
-                        </li>
-                    </ul>
+                    {this.pager()}
                     <hr />
                     <br />
                     <br />
                     {this.state.shouldLoadVideo
                         ? this.buildVideoCard()
                         : "loading..."}
+                    <br />
+                    <div>{this.pager()}</div>
                 </div>
+
+                <hr />
             </div>
         );
     }

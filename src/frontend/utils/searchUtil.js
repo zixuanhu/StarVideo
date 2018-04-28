@@ -9,7 +9,7 @@ export const youtubeSearch = (keywords, pageToken, relatedToVideoId) => {
         key: "AIzaSyDrpMSpOKrlS3g8FnOQfur2YXGVZJtjTAg",
         q: keywords,
         type: "video",
-        maxResults: 20,
+        maxResults: 12,
         order: "viewCount",
         pageToken: pageToken,
         relatedToVideoId: relatedToVideoId

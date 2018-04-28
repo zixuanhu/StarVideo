@@ -20,11 +20,11 @@
     font-size: 3vmin;
     font-weight: 10;
     float: left;
-    top: -3vmin;
+    top: -0.5vmin;
     position: relative;
 }
 #time {
     float: left;
-    top: -3vmin;
+    top: -0.5vmin;
     position: relative;
 }

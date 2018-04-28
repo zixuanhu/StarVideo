@@ -181,23 +181,27 @@ class Player extends React.Component {
     buildVideoCard() {
         return this.props.relatedvideos.map((video, i) => {
             return (
-                <div
-                    key={i}
-                    className="col-sm-6 col-md-4 playergallery-card btn"
-                    onClick={e => this.submitChange(video)}
-                >
-                    <div onMouseOver={e => this.MouseOver(video)}>
-                        <img
-                            src={video.snippet.thumbnails.medium.url}
-                            alt="video img"
-                        />
-                    </div>
-                    <div>
-                        <div id="h3"> {video.snippet.channelTitle} </div>
-                        <hr />
-                        <br />
-                        <div id="time">
-                            <Moment fromNow>{video.snippet.publishedAt}</Moment>
+                <div>
+                    <div
+                        key={i}
+                        className="col-sm-6 col-md-4 playergallery-card btn"
+                        onClick={e => this.submitChange(video)}
+                    >
+                        <div onMouseOver={e => this.MouseOver(video)}>
+                            <img
+                                src={video.snippet.thumbnails.medium.url}
+                                alt="video img"
+                            />
+                        </div>
+                        <div>
+                            <div id="h3"> {video.snippet.channelTitle} </div>
+                            <br />
+                            <br />
+                            <div id="time">
+                                <Moment fromNow>
+                                    {video.snippet.publishedAt}
+                                </Moment>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -222,7 +226,9 @@ class Player extends React.Component {
                         )}
                     </div>
                 </div>
-                <div className="relatedvideo">{this.buildVideoCard()}</div>
+                <div className="relatedvideo">
+                    <h3>Up next</h3> {this.buildVideoCard()}
+                </div>
             </div>
         );
     }
