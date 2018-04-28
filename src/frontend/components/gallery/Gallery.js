@@ -151,6 +151,8 @@ class Gallery extends React.Component {
                             : "loading..."}
                     </div>
                     <br />
+                    <hr />
+                    {this.pager()}
                 </div>
             </div>
         );
