@@ -6,14 +6,60 @@ class Player extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            video_id: this.props.match.params.video_id
+            video_id: this.props.match.params.video_id,
+            keywords: ""
         };
+    }
+    updateKeywords(e) {
+        e.preventDefault();
+        this.setState({
+            keywords: e.target.value
+        });
+    }
+
+    keyDown(e) {
+        const keycode = e.which; //取得对应的键值（数字）
+
+        if (keycode === 13) {
+            this.submitSearchChange(e);
+        }
+    }
+
+    submitSearchChange() {
+        this.props
+            .fetchVideos(this.state.keywords)
+            .then(() => this.props.history.push("/youtube"));
+    }
+
+    searchBar() {
+        return (
+            <div className="container">
+                <div className="input-group">
+                    <input
+                        type="text"
+                        className="form-control search-input"
+                        onChange={e => this.updateKeywords(e)}
+                        value={this.state.keywords}
+                        onKeyDown={e => this.keyDown(e)}
+                    />
+                    <span className="input-group-btn">
+                        <button
+                            className="btn btn-default"
+                            type="button"
+                            onClick={e => this.submitSearchChange()}
+                        >
+                            Search
+                        </button>
+                    </span>
+                </div>
+            </div>
+        );
     }
 
     componentWillMount() {
         this.props.getComment(this.state.video_id);
         this.props.getVideo(this.state.video_id);
-        this.props.fetchVideos(this.state.video_id);
+        this.props.fetchRelatedVideos(this.state.video_id);
         window.scrollTo(0, 0);
     }
 
@@ -47,7 +93,7 @@ class Player extends React.Component {
 
     buiildVideoInfo() {
         if (this.props.video.length === undefined) return;
-        const duration = this.props.video[0].contentDetails.duration;
+        // const duration = this.props.video[0].contentDetails.duration;
         const video = this.props.video[0].snippet;
         const name = video.localized.title;
         const description = video.localized.description;
@@ -137,7 +183,7 @@ class Player extends React.Component {
             return (
                 <div
                     key={i}
-                    className="col-sm-6 col-md-4 gallery-card"
+                    className="col-sm-6 col-md-4 playergallery-card"
                     onClick={e => this.submitChange(video)}
                 >
                     <div onMouseOver={e => this.MouseOver(video)}>
@@ -146,8 +192,8 @@ class Player extends React.Component {
                             alt="video img"
                         />
                     </div>
-                    <div className="gallery-card-right">
-                        <h3> {video.snippet.channelTitle} </h3>
+                    <div>
+                        <p id="h3"> {video.snippet.channelTitle} </p>
                         <Moment fromNow>{video.snippet.publishedAt}</Moment>
                     </div>
                 </div>
@@ -158,15 +204,21 @@ class Player extends React.Component {
     render() {
         return (
             <div>
-                {this.buildVideoPlayer()}
-                {this.buiildVideoInfo()}
-                <div className="comment-container">
-                    <hr />
-                    {this.props.comments.map((x, i) =>
-                        this.buildComments(x.snippet.topLevelComment.snippet, i)
-                    )}
+                {this.searchBar()}
+                <div className="playerbody container">
+                    {this.buildVideoPlayer()}
+                    {this.buiildVideoInfo()}
+                    <div className="comment-container">
+                        <hr />
+                        {this.props.comments.map((x, i) =>
+                            this.buildComments(
+                                x.snippet.topLevelComment.snippet,
+                                i
+                            )
+                        )}
+                    </div>
                 </div>
-                {this.buildVideoCard()}
+                <div className="relatedvideo">{this.buildVideoCard()}</div>
             </div>
         );
     }

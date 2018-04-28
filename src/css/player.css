@@ -1,3 +1,15 @@
+.relatedvideo {
+    margin-top: 90px;
+    display: flex;
+    flex-direction: column;
+    float: left;
+}
+
+.playerbody {
+    float: left;
+    max-width: 1032px;
+}
+
 .videoplayer {
     margin: 10vmin 10vmin 0 10vmin;
     display: flex;
@@ -12,6 +24,7 @@
     max-width: 854px;
     max-height: 480px;
 }
+
 .comment-container-item {
     display: flex;
     margin: 0 0 10px;
@@ -69,6 +82,7 @@
     display: flex;
     align-items: center;
 }
+
 .video-info div:nth-child(3) i {
     font-size: 24px;
     color: #aaa;

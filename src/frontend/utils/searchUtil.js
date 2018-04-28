@@ -3,8 +3,6 @@ import axios from "axios";
 export const UPDATE_VIDEOS = "UPDATE_VIDEOS";
 
 export const youtubeSearch = (keywords, pageToken, relatedToVideoId) => {
-    console.log(relatedToVideoId);
-
     const url = "https://www.googleapis.com/youtube/v3/search";
     const params = {
         part: "snippet",

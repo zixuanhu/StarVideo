@@ -6,13 +6,11 @@ class Gallery extends React.Component {
         super(props);
         this.state = {
             shouldLoadVideo: true,
-            keywords: "",
-            mouseOverVideo: {}
+            keywords: ""
         };
     }
     MouseOver(video) {
         this.setState({ mouseOverVideo: video });
-        console.log(video);
     }
 
     submitChange(video) {
@@ -20,7 +18,9 @@ class Gallery extends React.Component {
         this.props.history.push(path);
     }
     componentWillMount() {
-        this.props.fetchVideos("");
+        if (this.props.videos.length === 0) {
+            this.props.fetchVideos("");
+        }
     }
 
     updateKeywords(e) {
@@ -31,7 +31,7 @@ class Gallery extends React.Component {
     }
 
     keyDown(e) {
-        var keycode = e.which; //取得对应的键值（数字）
+        const keycode = e.which; //取得对应的键值（数字）
 
         if (keycode === 13) {
             this.submitSearchChange(e);
@@ -39,8 +39,6 @@ class Gallery extends React.Component {
     }
 
     submitSearchChange(e, video) {
-        //e.preventDefault();
-        // debugger;
         this.props.fetchVideos(this.state.keywords);
         this.props.history.push("/youtube");
     }
@@ -90,7 +88,7 @@ class Gallery extends React.Component {
                         >
                             <div onMouseOver={e => this.MouseOver(video)}>
                                 <img
-                                    src={video.snippet.thumbnails.medium.url}
+                                    src={video.snippet.thumbnails.default.url}
                                     alt="video img"
                                 />
                             </div>
@@ -112,7 +110,7 @@ class Gallery extends React.Component {
                     className="col-sm-6 col-md-4 gallery-card"
                     onClick={e => this.submitChange(video)}
                 >
-                    <div onMouseOver={e => this.MouseOver(video)}>
+                    <div>
                         <img
                             src={video.snippet.thumbnails.medium.url}
                             alt="video img"
@@ -130,27 +128,26 @@ class Gallery extends React.Component {
 
     render() {
         return (
-            <div>
-                <div className="container">
-                    <div className="input-group">
-                        <input
-                            type="text"
-                            className="form-control search-input"
-                            onChange={e => this.updateKeywords(e)}
-                            value={this.state.keywords}
-                            onKeyDown={e => this.keyDown(e)}
-                        />
-                        <span className="input-group-btn">
-                            <button
-                                className="btn btn-default"
-                                type="button"
-                                onClick={e => this.submitSearchChange(e)}
-                            >
-                                Search
-                            </button>
-                        </span>
-                    </div>
+            <div className="container">
+                <div className="input-group">
+                    <input
+                        type="text"
+                        className="form-control search-input"
+                        onChange={e => this.updateKeywords(e)}
+                        value={this.state.keywords}
+                        onKeyDown={e => this.keyDown(e)}
+                    />
+                    <span className="input-group-btn">
+                        <button
+                            className="btn btn-default"
+                            type="button"
+                            onClick={e => this.submitSearchChange(e)}
+                        >
+                            Search
+                        </button>
+                    </span>
                 </div>
+
                 <br />
                 <hr />
                 <div className="container">

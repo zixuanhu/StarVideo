@@ -5,3 +5,18 @@
 .gallery-card img {
     width: 100%;
 }
+
+.playergallery-card {
+    height: 160px;
+    width: 200%;
+}
+
+.playergallery-card img {
+    width: 250px;
+    float: left;
+}
+
+#h3 {
+    font-size: 3vmin;
+    font-weight: 10;
+}

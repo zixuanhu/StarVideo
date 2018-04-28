@@ -20,10 +20,13 @@ export const mapDispatchToProps = dispatch => {
         getVideo: video_id => {
             return dispatch(getVideoAction.getVideo(video_id));
         },
-        fetchVideos: relatedToVideoId => {
+        fetchRelatedVideos: relatedToVideoId => {
             return dispatch(
                 searchActions.fetchVideos({}, {}, relatedToVideoId)
             );
+        },
+        fetchVideos: keywords => {
+            return dispatch(searchActions.fetchVideos(keywords));
         }
     };
 };
