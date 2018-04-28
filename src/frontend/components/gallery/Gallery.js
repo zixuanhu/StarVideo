@@ -12,6 +12,7 @@ class Gallery extends React.Component {
     }
     MouseOver(video) {
         this.setState({ mouseOverVideo: video });
+        console.log(video);
     }
 
     submitChange(video) {
