@@ -84,8 +84,9 @@ class Gallery extends React.Component {
                     className="col-sm-6 col-md-4 gallery-card btn thumbnail"
                     onClick={e => this.submitChange(video)}
                 >
-                    <div>
+                    <div className="view zoom">
                         <img
+                            className="img-fluid "
                             src={video.snippet.thumbnails.medium.url}
                             alt="video img"
                         />
@@ -144,14 +145,13 @@ class Gallery extends React.Component {
                     <hr />
                     <br />
                     <br />
-                    {this.state.shouldLoadVideo
-                        ? this.buildVideoCard()
-                        : "loading..."}
+                    <div className="container">
+                        {this.state.shouldLoadVideo
+                            ? this.buildVideoCard()
+                            : "loading..."}
+                    </div>
                     <br />
-                    <div>{this.pager()}</div>
                 </div>
-
-                <hr />
             </div>
         );
     }

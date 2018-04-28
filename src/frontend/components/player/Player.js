@@ -133,23 +133,20 @@ class Player extends React.Component {
                         <Moment format="MMM DD,YYYY">{publishedAt}</Moment>
                     </div>
                 </div>
-                <div>
-                    <p>
-                        <a
-                            data-toggle="collapse"
-                            href="#collapseExample"
-                            role="button"
-                            aria-expanded="false"
-                            aria-controls="collapseExample"
-                        >
-                            Description
-                        </a>
-                    </p>
-                    <div className="collapse" id="collapseExample">
+                <div id="module">
+                    <a
+                        data-toggle="collapse"
+                        href="#collapseExample"
+                        role="button"
+                        aria-expanded="false"
+                        aria-controls="collapseExample"
+                    />
+
+                    <p className="collapse" id="collapseExample">
                         <div className="card card-body">
                             <Linkify>{description}</Linkify>
                         </div>
-                    </div>
+                    </p>
                 </div>
             </div>
         );

@@ -1,9 +1,18 @@
 .gallery-card {
-    height: 320px;
+    height: 80vmin;
+    max-height: 320px;
+    margin: 3vmin;
 }
 
 .gallery-card img {
     width: 100%;
+}
+.gallery-card:hover {
+    width: 50%;
+    max-height: 450px;
+}
+.gallery-card img:hover {
+    width: 101%;
 }
 
 .playergallery-card {
