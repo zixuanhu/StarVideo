@@ -1,6 +1,7 @@
 .gallery-card {
-    height: 80vmin;
+    height: 90vmin;
     max-height: 320px;
+    max-width: 300px;
     margin: 3vmin;
 }
 
