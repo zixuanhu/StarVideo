@@ -2,7 +2,7 @@ import React from "react";
 import ReactHtmlParser from "react-html-parser";
 import Moment from "react-moment";
 import Linkify from "react-linkify";
-class Player extends React.Component {
+class vimeoPlayer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -57,9 +57,9 @@ class Player extends React.Component {
     }
 
     componentWillMount() {
-        this.props.getComment(this.state.video_id);
-        this.props.getVideo(this.state.video_id);
-        this.props.fetchRelatedVideos(this.state.video_id);
+        //this.props.getComment(this.state.video_id);
+        //this.props.getVideo(this.state.video_id);
+        //this.props.fetchRelatedVideos(this.state.video_id);
         window.scrollTo(0, 0);
     }
 

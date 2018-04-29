@@ -8,6 +8,10 @@ class NavBar extends React.Component {
         e.preventDefault();
         this.props.history.push("/youtube");
     }
+    onRedirectVimeo(e) {
+        e.preventDefault();
+        this.props.history.push("/vimeo");
+    }
 
     render() {
         return (
@@ -21,18 +25,14 @@ class NavBar extends React.Component {
                             data-target="#bs-example-navbar-collapse-1"
                             aria-expanded="false"
                         >
-                            <span className="sr-only">
-                                Toggle navigation
-                            </span>
+                            <span className="sr-only">Toggle navigation</span>
                             <span className="icon-bar" />
                             <span className="icon-bar" />
                             <span className="icon-bar" />
                         </button>
                         <a
                             className=" btn navbar-brand"
-                            onClick={e =>
-                                this.onRedirectHome(e)
-                            }
+                            onClick={e => this.onRedirectHome(e)}
                         >
                             StarVideo
                         </a>
@@ -46,13 +46,17 @@ class NavBar extends React.Component {
                             <li>
                                 <a
                                     className="btn"
-                                    onClick={e =>
-                                        this.onRedirectYoutube(
-                                            e
-                                        )
-                                    }
+                                    onClick={e => this.onRedirectYoutube(e)}
                                 >
                                     Youtube
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    className="btn"
+                                    onClick={e => this.onRedirectVimeo(e)}
+                                >
+                                    Vimeo
                                 </a>
                             </li>
                             <li className="dropdown">
@@ -77,10 +81,7 @@ class NavBar extends React.Component {
                                     <li>
                                         <a>Portfolio</a>
                                     </li>
-                                    <li
-                                        role="separator"
-                                        className="divider"
-                                    />
+                                    <li role="separator" className="divider" />
                                 </ul>
                             </li>
                         </ul>

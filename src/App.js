@@ -3,6 +3,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import "./App.css";
 import Nav from "./frontend/components/navbar/navbar";
 import GalleryContainer from "./frontend/components/gallery/GalleryContainer";
+import vimeoGalleryContainer from "./frontend/components/vimeoGallery/vimeoGalleryContainer";
 import PlayerContainer from "./frontend/components/player/PlayerContainer";
 
 class App extends React.Component {
@@ -12,6 +13,11 @@ class App extends React.Component {
                 <div>
                     <Route path="/" component={Nav} />
                     <Route exact path="/youtube" component={GalleryContainer} />
+                    <Route
+                        exact
+                        path="/vimeo"
+                        component={vimeoGalleryContainer}
+                    />
                     <Route
                         exact
                         path="/youtube/video/:video_id"

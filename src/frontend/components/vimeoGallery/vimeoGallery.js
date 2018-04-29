@@ -1,7 +1,7 @@
 import React from "react";
 import Moment from "react-moment";
 // import isEmpty from "lodash/isEmpty";
-class Gallery extends React.Component {
+class vimeoGallery extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -9,25 +9,23 @@ class Gallery extends React.Component {
             keywords: ""
         };
     }
-    MouseOver(video) {
-        this.setState({ mouseOverVideo: video });
-    }
 
     submitChange(video) {
-        const path = `youtube/video/${video.id.videoId}`;
-        this.props.history.push(path);
+        // const path = `youtube/video/${video.id.videoId}`;
+        // this.props.history.push(path);
     }
     componentWillMount() {
-        if (this.props.videos.length === 0) {
-            this.props.fetchVideos("");
+        if (this.props.vimeo.length === 0) {
+            this.props.fetchVimeo("周杰伦");
+            console.log("vimeo search 1");
         }
     }
 
     updateKeywords(e) {
-        e.preventDefault();
-        this.setState({
-            keywords: e.target.value
-        });
+        // e.preventDefault();
+        // this.setState({
+        //     keywords: e.target.value
+        // });
     }
 
     keyDown(e) {
@@ -39,46 +37,45 @@ class Gallery extends React.Component {
     }
 
     submitSearchChange(e, video) {
-        this.props.fetchVideos(this.state.keywords);
-        this.props.history.push("/youtube");
+        // this.props.fetchVideos(this.state.keywords);
+        // this.props.history.push("/youtube");
     }
 
     onNextPage(e) {
-        e.preventDefault();
-        this.setState({
-            shouldLoadVideo: false
-        });
-        this.props
-            .fetchVideos(this.state.keywords, this.props.nextPageToken)
-            .then(() =>
-                this.setState({
-                    shouldLoadVideo: true,
-                    mouseOverVideo: {}
-                })
-            );
+        // e.preventDefault();
+        // this.setState({
+        //     shouldLoadVideo: false
+        // });
+        // this.props
+        //     .fetchVideos(this.state.keywords, this.props.nextPageToken)
+        //     .then(() =>
+        //         this.setState({
+        //             shouldLoadVideo: true,
+        //             mouseOverVideo: {}
+        //         })
+        //     );
     }
     onForwardPage(e) {
-        e.preventDefault();
-        this.setState({
-            shouldLoadVideo: false
-        });
-
-        this.props
-            .fetchVideos(this.state.keywords, this.props.prePageToken)
-            .then(() =>
-                this.setState({
-                    shouldLoadVideo: true
-                })
-            );
+        // e.preventDefault();
+        // this.setState({
+        //     shouldLoadVideo: false
+        // });
+        // this.props
+        //     .fetchVideos(this.state.keywords, this.props.prePageToken)
+        //     .then(() =>
+        //         this.setState({
+        //             shouldLoadVideo: true
+        //         })
+        //     );
     }
     //需要加入mouseover
 
     buildVideoCard() {
-        let videos = [];
-        for (let i = 0; i < this.props.videos.length; i++) {
-            const video = this.props.videos[i];
-
-            videos.push(
+        let vimeos = [];
+        for (let i = 0; i < this.props.vimeo.length; i++) {
+            const video = this.props.vimeo[i];
+            //debugger;
+            vimeos.push(
                 <div
                     key={i}
                     className="col-sm-6 col-md-4 gallery-card btn thumbnail"
@@ -87,18 +84,22 @@ class Gallery extends React.Component {
                     <div className="view zoom">
                         <img
                             className="img-fluid "
-                            src={video.snippet.thumbnails.medium.url}
+                            src={
+                                video.pictures.sizes[
+                                    video.pictures.sizes.length - 1
+                                ].link
+                            }
                             alt="video img"
                         />
                     </div>
-                    <div className="gallery-card-right">
-                        <h3>{video.snippet.channelTitle}</h3>
-                        <Moment fromNow>{video.snippet.publishedAt}</Moment>
+                    <div className="gallery-card-info">
+                        <h3>{video.name}</h3>
+                        <Moment fromNow>{video.metadata.modified_time}</Moment>
                     </div>
                 </div>
             );
         }
-        return videos;
+        return vimeos;
     }
     searchBar() {
         return (
@@ -160,4 +161,4 @@ class Gallery extends React.Component {
     }
 }
 
-export default Gallery;
+export default vimeoGallery;

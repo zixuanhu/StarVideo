@@ -15,6 +15,13 @@ export const updateVideos = (
     };
 };
 
+export const updateVimeo = videos => {
+    return {
+        type: searchApiUtil.UPDATE_VIMEO,
+        videos
+    };
+};
+
 export const fetchVideos = (keywords, pageToken, relatedToVideoId) => {
     return dispatch => {
         return searchApiUtil
@@ -32,6 +39,16 @@ export const fetchVideos = (keywords, pageToken, relatedToVideoId) => {
                     )
                 );
             });
+    };
+};
+
+export const fetchVimeo = keywords => {
+    return dispatch => {
+        return searchApiUtil.vimeoSearch(keywords).then(res => {
+            // debugger;
+            const videos = res;
+            dispatch(updateVimeo(videos));
+        });
     };
 };
 
