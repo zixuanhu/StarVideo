@@ -5,7 +5,6 @@ import * as searchActions from "../../actions/searchAction";
 import vimeoPlayer from "./vimeoPlayer";
 
 export const mapStateToProps = state => {
-    debugger;
     return {
         video: state.video.video,
         relatedvideos: state.vimeo.videos,
@@ -19,7 +18,6 @@ export const mapDispatchToProps = dispatch => {
             return dispatch(getVideoAction.getVimeo(video_id));
         },
         fetchVimeo: video_id => {
-            debugger;
             return dispatch(searchActions.fetchRelatedVimeo(video_id));
         },
         getComment: video_id => {

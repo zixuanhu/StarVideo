@@ -26,7 +26,6 @@ export const vimeoSearch = (keywords, page) => {
     const url = `https://api.vimeo.com/videos?page=${page}&per_page=12&query=${keywords}`;
 
     return axios.get(url).then(response => {
-        debugger;
         return response.data.data;
     });
 };
@@ -34,7 +33,7 @@ export const vimeoSearch = (keywords, page) => {
 export const vimeoRelatedSearch = video_id => {
     axios.defaults.headers.common["Authorization"] =
         "bearer 7a9fd5a833dd4d05a1832ce02f577b07";
-    const url = `https://api.vimeo.com/videos/${video_id}/videos?filter=related`;
+    const url = `https://api.vimeo.com/videos/${video_id}/videos?filter=related&per_page=12`;
 
     return axios.get(url).then(response => {
         return response.data.data;

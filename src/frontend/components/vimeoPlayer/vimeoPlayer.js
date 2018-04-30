@@ -59,6 +59,7 @@ class vimeoPlayer extends React.Component {
     }
 
     componentWillMount() {
+        this.setState({ video_id: this.props.match.params.video_id });
         this.props.getComment(this.state.video_id);
         this.props.getVideo(this.state.video_id);
         this.props.fetchVimeo(this.state.video_id);

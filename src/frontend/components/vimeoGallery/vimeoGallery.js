@@ -6,7 +6,7 @@ class vimeoGallery extends React.Component {
         super(props);
         this.state = {
             shouldLoadVideo: true,
-            keywords: "pornhub",
+            keywords: "good",
             page: 1
         };
     }
@@ -17,7 +17,7 @@ class vimeoGallery extends React.Component {
     }
     componentWillMount() {
         if (this.props.vimeo.length === 0) {
-            this.props.fetchVimeo("pornhub");
+            this.props.fetchVimeo("good");
         }
     }
 
