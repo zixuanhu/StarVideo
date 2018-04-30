@@ -5,6 +5,7 @@ import Nav from "./frontend/components/navbar/navbar";
 import GalleryContainer from "./frontend/components/gallery/GalleryContainer";
 import vimeoGalleryContainer from "./frontend/components/vimeoGallery/vimeoGalleryContainer";
 import PlayerContainer from "./frontend/components/player/PlayerContainer";
+import vimeoPlayerContainer from "./frontend/components/vimeoPlayer/vimeoPlayerContainer";
 
 class App extends React.Component {
     render() {
@@ -22,6 +23,11 @@ class App extends React.Component {
                         exact
                         path="/youtube/video/:video_id"
                         component={PlayerContainer}
+                    />
+                    <Route
+                        exact
+                        path="/vimeo/videos/:video_id"
+                        component={vimeoPlayerContainer}
                     />
                 </div>
             </BrowserRouter>

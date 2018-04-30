@@ -74,6 +74,7 @@ class Gallery extends React.Component {
     //需要加入mouseover
 
     buildVideoCard() {
+        //debugger;
         let videos = [];
         for (let i = 0; i < this.props.videos.length; i++) {
             const video = this.props.videos[i];

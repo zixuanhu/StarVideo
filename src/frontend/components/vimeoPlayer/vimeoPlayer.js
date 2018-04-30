@@ -5,6 +5,7 @@ import Linkify from "react-linkify";
 class vimeoPlayer extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
             video_id: this.props.match.params.video_id,
             keywords: ""
@@ -12,6 +13,7 @@ class vimeoPlayer extends React.Component {
     }
     updateKeywords(e) {
         e.preventDefault();
+
         this.setState({
             keywords: e.target.value
         });
@@ -27,8 +29,8 @@ class vimeoPlayer extends React.Component {
 
     submitSearchChange() {
         this.props
-            .fetchVideos(this.state.keywords)
-            .then(() => this.props.history.push("/youtube"));
+            .fetchVimeo(this.state.keywords)
+            .then(() => this.props.history.push("/vimeo"));
     }
 
     searchBar() {
@@ -57,20 +59,20 @@ class vimeoPlayer extends React.Component {
     }
 
     componentWillMount() {
-        //this.props.getComment(this.state.video_id);
-        //this.props.getVideo(this.state.video_id);
-        //this.props.fetchRelatedVideos(this.state.video_id);
+        this.props.getComment(this.state.video_id);
+        this.props.getVideo(this.state.video_id);
+        this.props.fetchVimeo(this.state.video_id);
         window.scrollTo(0, 0);
     }
 
     buildComments(comment, i) {
         const author = {
-            name: comment.authorDisplayName,
-            img: comment.authorProfileImageUrl
+            name: comment.user.name,
+            img: comment.user.pictures.sizes[0].link
         };
-        const content = comment.textDisplay;
-        const publishDate = comment.publishedAt;
-        const likeCount = comment.likeCount;
+        const content = comment.text;
+        const publishDate = comment.created_on;
+        const likeCount = 0;
         return (
             <div key={i} className="comment-container-item">
                 <div className="comment-left">
@@ -91,16 +93,16 @@ class vimeoPlayer extends React.Component {
         );
     }
 
-    buiildVideoInfo() {
-        if (this.props.video.length === undefined) return;
+    buildVideoInfo() {
+        if (this.props.video.embed === undefined) return;
         // const duration = this.props.video[0].contentDetails.duration;
-        const video = this.props.video[0].snippet;
-        const name = video.localized.title;
-        const description = video.localized.description;
-        const publishedAt = video.publishedAt;
+        const video = this.props.video;
+        const name = video.namw;
+        const description = video.description;
+        const publishedAt = video.release_time;
         const statistics = {
-            likeCount: this.props.video[0].statistics.likeCount,
-            viewCount: this.props.video[0].statistics.viewCount
+            likeCount: video.metadata.connections.likes.total,
+            viewCount: video.stats.plays
         };
 
         //debugger;
@@ -151,26 +153,23 @@ class vimeoPlayer extends React.Component {
     }
 
     buildVideoPlayer() {
+        if (this.props.video.embed === undefined) return;
         return (
             <div className="videoplayer embed-responsive">
-                <iframe
-                    allowFullScreen="allowFullScreen"
-                    title={this.state.video_id}
-                    className="embed-responsive-item video"
-                    src={`https://www.youtube.com/embed/${this.state.video_id}`}
-                    sandbox="allow-scripts allow-presentation allow-same-origin"
-                />
+                {ReactHtmlParser(this.props.video.embed.html)}
             </div>
         );
     }
     MouseOver(video) {
-        this.setState({ mouseOverVideo: video });
+        // this.setState({ mouseOverVideo: video });
     }
 
     submitChange(video) {
-        const path = `${video.id.videoId}`;
-        this.setState({ video_id: video.id.videoId });
+        const path = `vimeo${video.uri}`;
+
+        this.props.history.push("/");
         this.props.history.push(path);
+
         this.componentWillMount();
     }
     buildVideoCard() {
@@ -183,16 +182,20 @@ class vimeoPlayer extends React.Component {
                 >
                     <div onMouseOver={e => this.MouseOver(video)}>
                         <img
-                            src={video.snippet.thumbnails.medium.url}
+                            src={
+                                video.pictures.sizes[
+                                    video.pictures.sizes.length - 1
+                                ].link
+                            }
                             alt="video img"
                         />
                     </div>
                     <div>
-                        <div id="h3"> {video.snippet.channelTitle} </div>
+                        <div id="h3"> {video.name} </div>
                         <br />
                         <br />
                         <div id="time">
-                            <Moment fromNow>{video.snippet.publishedAt}</Moment>
+                            <Moment fromNow>{video.created_time}</Moment>
                         </div>
                     </div>
                 </div>
@@ -206,14 +209,11 @@ class vimeoPlayer extends React.Component {
                 {this.searchBar()}
                 <div className="playerbody container">
                     {this.buildVideoPlayer()}
-                    {this.buiildVideoInfo()}
+                    {this.buildVideoInfo()}
                     <div className="comment-container">
                         <hr />
                         {this.props.comments.map((x, i) =>
-                            this.buildComments(
-                                x.snippet.topLevelComment.snippet,
-                                i
-                            )
+                            this.buildComments(x, i)
                         )}
                     </div>
                 </div>
@@ -225,4 +225,4 @@ class vimeoPlayer extends React.Component {
     }
 }
 
-export default Player;
+export default vimeoPlayer;

@@ -6,26 +6,26 @@ class vimeoGallery extends React.Component {
         super(props);
         this.state = {
             shouldLoadVideo: true,
-            keywords: ""
+            keywords: "pornhub",
+            page: 1
         };
     }
 
     submitChange(video) {
-        // const path = `youtube/video/${video.id.videoId}`;
-        // this.props.history.push(path);
+        const path = `vimeo${video.uri}`;
+        this.props.history.push(path);
     }
     componentWillMount() {
         if (this.props.vimeo.length === 0) {
-            this.props.fetchVimeo("周杰伦");
-            console.log("vimeo search 1");
+            this.props.fetchVimeo("pornhub");
         }
     }
 
     updateKeywords(e) {
-        // e.preventDefault();
-        // this.setState({
-        //     keywords: e.target.value
-        // });
+        e.preventDefault();
+        this.setState({
+            keywords: e.target.value
+        });
     }
 
     keyDown(e) {
@@ -36,37 +36,52 @@ class vimeoGallery extends React.Component {
         }
     }
 
-    submitSearchChange(e, video) {
-        // this.props.fetchVideos(this.state.keywords);
-        // this.props.history.push("/youtube");
+    submitSearchChange() {
+        this.setState({
+            shouldLoadVideo: false
+        });
+        this.props.fetchVimeo(this.state.keywords).then(() =>
+            this.setState({
+                shouldLoadVideo: true
+            })
+        );
     }
 
     onNextPage(e) {
-        // e.preventDefault();
-        // this.setState({
-        //     shouldLoadVideo: false
-        // });
-        // this.props
-        //     .fetchVideos(this.state.keywords, this.props.nextPageToken)
-        //     .then(() =>
-        //         this.setState({
-        //             shouldLoadVideo: true,
-        //             mouseOverVideo: {}
-        //         })
-        //     );
+        e.preventDefault();
+        this.setState({
+            shouldLoadVideo: false
+        });
+        //debugger;
+        this.props
+            .fetchVimeo(this.state.keywords, this.state.page + 1)
+            .then(() =>
+                this.setState({
+                    shouldLoadVideo: true,
+
+                    page: this.state.page + 1
+                })
+            );
+        //debugger;
     }
     onForwardPage(e) {
-        // e.preventDefault();
-        // this.setState({
-        //     shouldLoadVideo: false
-        // });
-        // this.props
-        //     .fetchVideos(this.state.keywords, this.props.prePageToken)
-        //     .then(() =>
-        //         this.setState({
-        //             shouldLoadVideo: true
-        //         })
-        //     );
+        if (this.state.page <= 1) {
+            return;
+        }
+        e.preventDefault();
+        this.setState({
+            shouldLoadVideo: false
+        });
+
+        this.props
+            .fetchVimeo(this.state.keywords, this.state.page - 1)
+            .then(() =>
+                this.setState({
+                    shouldLoadVideo: true,
+
+                    page: this.state.page - 1
+                })
+            );
     }
     //需要加入mouseover
 
@@ -78,7 +93,7 @@ class vimeoGallery extends React.Component {
             vimeos.push(
                 <div
                     key={i}
-                    className="col-sm-6 col-md-4 gallery-card btn thumbnail"
+                    className="col-sm-6 col-md-4 gallery-card gallery-card-vimeo"
                     onClick={e => this.submitChange(video)}
                 >
                     <div className="view zoom">
@@ -89,11 +104,12 @@ class vimeoGallery extends React.Component {
                                     video.pictures.sizes.length - 1
                                 ].link
                             }
+                            style={{ width: "100%", height: "180px" }}
                             alt="video img"
                         />
                     </div>
-                    <div className="gallery-card-info">
-                        <h3>{video.name}</h3>
+                    <div className="caption">
+                        <h5 style={{ whiteSpace: "normal" }}>{video.name}</h5>
                         <Moment fromNow>{video.metadata.modified_time}</Moment>
                     </div>
                 </div>
@@ -115,7 +131,7 @@ class vimeoGallery extends React.Component {
                     <button
                         className="btn btn-default"
                         type="button"
-                        onClick={e => this.submitSearchChange(e)}
+                        onClick={e => this.submitSearchChange()}
                     >
                         Search
                     </button>
@@ -137,7 +153,7 @@ class vimeoGallery extends React.Component {
     }
 
     render() {
-        console.log(this.props.vimeo);
+        //console.log(this.props.vimeo);
         return (
             <div className="container">
                 <div>
@@ -147,11 +163,9 @@ class vimeoGallery extends React.Component {
                     <hr />
                     <br />
                     <br />
-                    <div className="container">
-                        {this.state.shouldLoadVideo
-                            ? this.buildVideoCard()
-                            : "loading..."}
-                    </div>
+                    {this.state.shouldLoadVideo
+                        ? this.buildVideoCard()
+                        : "loading..."}
                     <br />
                     <hr />
                     {this.pager()}

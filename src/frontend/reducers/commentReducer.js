@@ -14,6 +14,13 @@ const openPlayerReducer = (state = defaultState, action) => {
                 comments: comments
             });
             return newCommmentState;
+        case commentUtil.UPDATE_vimeoComment:
+            comments = action.video;
+            const newVimeoCommmentState = Object.assign({}, state, {
+                comments: comments
+            });
+
+            return newVimeoCommmentState;
         default:
             return state;
     }

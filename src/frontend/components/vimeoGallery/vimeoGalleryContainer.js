@@ -10,8 +10,8 @@ export const mapStateToProps = state => {
 
 export const mapDispatchToProps = dispatch => {
     return {
-        fetchVimeo: keywords => {
-            return dispatch(searchActions.fetchVimeo(keywords));
+        fetchVimeo: (keywords, page = 1) => {
+            return dispatch(searchActions.fetchVimeo(keywords, page));
         }
     };
 };

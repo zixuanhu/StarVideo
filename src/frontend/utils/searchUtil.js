@@ -20,16 +20,24 @@ export const youtubeSearch = (keywords, pageToken, relatedToVideoId) => {
     });
 };
 
-export const vimeoSearch = keywords => {
+export const vimeoSearch = (keywords, page) => {
     axios.defaults.headers.common["Authorization"] =
         "bearer 7a9fd5a833dd4d05a1832ce02f577b07";
-    const url = "https://api.vimeo.com/videos";
-    const params = {
-        query: keywords
-    };
-    return axios.get(url, { params }).then(response => {
+    const url = `https://api.vimeo.com/videos?page=${page}&per_page=12&query=${keywords}`;
+
+    return axios.get(url).then(response => {
+        debugger;
         return response.data.data;
     });
 };
 
+export const vimeoRelatedSearch = video_id => {
+    axios.defaults.headers.common["Authorization"] =
+        "bearer 7a9fd5a833dd4d05a1832ce02f577b07";
+    const url = `https://api.vimeo.com/videos/${video_id}/videos?filter=related`;
+
+    return axios.get(url).then(response => {
+        return response.data.data;
+    });
+};
 // https://www.googleapis.com/youtube/v3/search?part=snippet&key=AIzaSyDrpMSpOKrlS3g8FnOQfur2YXGVZJtjTAg&q=ibaza&type=video&maxResults=3&order=viewCount&pageToken=CAoQAA

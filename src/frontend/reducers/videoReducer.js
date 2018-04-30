@@ -14,6 +14,13 @@ const videoReducer = (state = defaultState, action) => {
                 video: video
             });
             return newVideoState;
+        case videoUtil.UPDATE_VIMEO:
+            video = action.video;
+
+            const newVimeoState = Object.assign({}, state, {
+                video: video
+            });
+            return newVimeoState;
         default:
             return state;
     }
