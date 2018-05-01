@@ -66,9 +66,14 @@ class vimeoPlayer extends React.Component {
 
     newPage(video_id) {
         // debugger;
-        this.props.getComment(video_id);
-        this.props.getVideo(video_id);
-        this.props.fetchRelatedVimeo(video_id);
+        this.props
+            .getComment(video_id)
+            .then(() =>
+                this.props
+                    .getVideo(video_id)
+                    .then(() => this.props.fetchRelatedVimeo(video_id))
+            );
+        debugger;
         window.scrollTo(0, 0);
         // debugger;
     }

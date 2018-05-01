@@ -10,7 +10,9 @@ class Gallery extends React.Component {
         };
     }
     MouseOver(video) {
-        this.setState({ mouseOverVideo: video });
+        this.setState({
+            mouseOverVideo: video
+        });
     }
 
     submitChange(video) {
@@ -79,84 +81,118 @@ class Gallery extends React.Component {
         for (let i = 0; i < this.props.videos.length; i++) {
             const video = this.props.videos[i];
 
-            videos.push(
-                <div
-                    key={i}
-                    className="col-sm-6 col-md-4 gallery-card btn thumbnail"
-                    onClick={e => this.submitChange(video)}
+            videos.push( <
+                div key = {
+                    i
+                }
+                className = "col-sm-6 col-md-4 gallery-card btn thumbnail"
+                onClick = {
+                    e => this.submitChange(video)
+                } >
+                <
+                div className = "view zoom" >
+                <
+                img className = "img-fluid "
+                src = {
+                    video.snippet.thumbnails.medium.url
+                }
+                alt = "video img" /
                 >
-                    <div className="view zoom">
-                        <img
-                            className="img-fluid "
-                            src={video.snippet.thumbnails.medium.url}
-                            alt="video img"
-                        />
-                    </div>
-                    <div className="gallery-card-right">
-                        <h3>{video.snippet.channelTitle}</h3>
-                        <Moment fromNow>{video.snippet.publishedAt}</Moment>
-                    </div>
-                </div>
+                <
+                /div> <
+                div className = "gallery-card-right" >
+                <
+                h3 > {
+                    video.snippet.channelTitle
+                } < /h3> <
+                Moment fromNow > {
+                    video.snippet.publishedAt
+                } < /Moment> <
+                /div> <
+                /div>
             );
         }
         return videos;
     }
     searchBar() {
-        return (
-            <div className="input-group">
-                <input
-                    type="text"
-                    className="form-control search-input"
-                    onChange={e => this.updateKeywords(e)}
-                    value={this.state.keywords}
-                    onKeyDown={e => this.keyDown(e)}
-                />
-                <span className="input-group-btn">
-                    <button
-                        className="btn btn-default"
-                        type="button"
-                        onClick={e => this.submitSearchChange(e)}
-                    >
-                        Search
-                    </button>
-                </span>
-            </div>
+        return ( <
+            div className = "input-group" >
+            <
+            input type = "text"
+            className = "form-control search-input"
+            onChange = {
+                e => this.updateKeywords(e)
+            }
+            value = {
+                this.state.keywords
+            }
+            onKeyDown = {
+                e => this.keyDown(e)
+            }
+            /> <
+            span className = "input-group-btn" >
+            <
+            button className = "btn btn-default"
+            type = "button"
+            onClick = {
+                e => this.submitSearchChange(e)
+            } >
+            Search <
+            /button> <
+            /span> <
+            /div>
         );
     }
     pager() {
-        return (
-            <ul className="pager">
-                <li className="previous btn">
-                    <a onClick={e => this.onForwardPage(e)}>Previous</a>
-                </li>
-                <li className="next btn">
-                    <a onClick={e => this.onNextPage(e)}>Next</a>
-                </li>
-            </ul>
+        return ( <
+            ul className = "pager" >
+            <
+            li className = "previous btn" >
+            <
+            a onClick = {
+                e => this.onForwardPage(e)
+            } > Previous < /a> <
+            /li> <
+            li className = "next btn" >
+            <
+            a onClick = {
+                e => this.onNextPage(e)
+            } > Next < /a> <
+            /li> <
+            /ul>
         );
     }
 
     render() {
-        console.log(this.props.vimeo);
-        return (
-            <div className="container">
-                <div>
-                    {this.searchBar()}
-                    <hr />
-                    {this.pager()}
-                    <hr />
-                    <br />
-                    <br />
-                    <div className="container">
-                        {this.state.shouldLoadVideo
-                            ? this.buildVideoCard()
-                            : "loading..."}
-                    </div>
-                    <br />
-                    <hr />
-                    {this.pager()}
-                </div>
-            </div>
+
+        return ( <
+            div className = "container" >
+            <
+            div > {
+                this.searchBar()
+            } <
+            hr / > {
+                this.pager()
+            } <
+            hr / >
+            <
+            br / >
+            <
+            br / >
+            <
+            div className = "container" > {
+                this.state.shouldLoadVideo ?
+                this.buildVideoCard() :
+                    "loading..."
+            } <
+            /div> <
+            br / >
+            <
+            hr / > {
+                this.pager()
+            } <
+            /div> <
+            /div>
         );
     }
 }

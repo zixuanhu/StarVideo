@@ -23,7 +23,7 @@ export const youtubeSearch = (keywords, pageToken, relatedToVideoId) => {
 export const vimeoSearch = (keywords, page) => {
     axios.defaults.headers.common["Authorization"] =
         "bearer cfe32c79fd18d6fd6d3186253865fbcf";
-    const url = `https://api.vimeo.com/videos?page=${page}&per_page=12&query=${keywords}`;
+    const url = `https://api.vimeo.com/videos?page=${page}&per_page=12&query=${keywords}&sort=comments`;
 
     return axios.get(url).then(response => {
         return response.data.data;
