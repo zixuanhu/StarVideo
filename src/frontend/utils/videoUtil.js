@@ -17,7 +17,7 @@ export const getVideo = video_id => {
 
 export const getVimeo = video_id => {
     axios.defaults.headers.common["Authorization"] =
-        "bearer 7a9fd5a833dd4d05a1832ce02f577b07";
+        "bearer cfe32c79fd18d6fd6d3186253865fbcf";
     const url = `https://api.vimeo.com/videos/ ${video_id}`;
 
     return axios.get(url).then(response => {

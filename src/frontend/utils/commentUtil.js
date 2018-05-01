@@ -16,7 +16,7 @@ export const getComment = videoId => {
 
 export const getVimeoComment = videoId => {
     axios.defaults.headers.common["Authorization"] =
-        "bearer 7a9fd5a833dd4d05a1832ce02f577b07";
+        "bearer cfe32c79fd18d6fd6d3186253865fbcf";
     const url = `https://api.vimeo.com/videos/${videoId}/comments`;
 
     return axios.get(url).then(response => {

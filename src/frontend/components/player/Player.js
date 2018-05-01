@@ -134,17 +134,21 @@ class Player extends React.Component {
                     </div>
                 </div>
                 <div id="module">
-                    <a
-                        data-toggle="collapse"
-                        href="#collapseExample"
-                        role="button"
-                        aria-expanded="false"
-                        aria-controls="collapseExample"
-                    />
-
-                    <p className="collapse" id="collapseExample">
-                        <Linkify>{description}</Linkify>
+                    <p>
+                        <a
+                            data-toggle="collapse"
+                            href="#collapseExample"
+                            role="button"
+                            aria-expanded="false"
+                            aria-controls="collapseExample"
+                        >
+                            Description
+                        </a>
                     </p>
+
+                    <div className="collapse" id="collapseExample">
+                        <Linkify>{description}</Linkify>
+                    </div>
                 </div>
             </div>
         );
@@ -170,8 +174,7 @@ class Player extends React.Component {
     submitChange(video) {
         const path = `${video.id.videoId}`;
         this.setState({ video_id: video.id.videoId });
-        this.props.history.push(path);
-        this.componentWillMount();
+        this.props.history.push(`/youtube/video/${path}`);
     }
     buildVideoCard() {
         return this.props.relatedvideos.map((video, i) => {

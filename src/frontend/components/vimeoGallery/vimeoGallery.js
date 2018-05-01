@@ -12,7 +12,7 @@ class vimeoGallery extends React.Component {
     }
 
     submitChange(video) {
-        const path = `vimeo${video.uri}`;
+        const path = `/vimeo${video.uri}`;
         this.props.history.push(path);
     }
     componentWillMount() {

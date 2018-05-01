@@ -13,7 +13,6 @@ class vimeoPlayer extends React.Component {
     }
     updateKeywords(e) {
         e.preventDefault();
-
         this.setState({
             keywords: e.target.value
         });
@@ -59,11 +58,19 @@ class vimeoPlayer extends React.Component {
     }
 
     componentWillMount() {
-        this.setState({ video_id: this.props.match.params.video_id });
         this.props.getComment(this.state.video_id);
         this.props.getVideo(this.state.video_id);
-        this.props.fetchVimeo(this.state.video_id);
+        this.props.fetchRelatedVimeo(this.state.video_id);
         window.scrollTo(0, 0);
+    }
+
+    newPage(video_id) {
+        // debugger;
+        this.props.getComment(video_id);
+        this.props.getVideo(video_id);
+        this.props.fetchRelatedVimeo(video_id);
+        window.scrollTo(0, 0);
+        // debugger;
     }
 
     buildComments(comment, i) {
@@ -96,9 +103,11 @@ class vimeoPlayer extends React.Component {
 
     buildVideoInfo() {
         if (this.props.video.embed === undefined) return;
+
         // const duration = this.props.video[0].contentDetails.duration;
         const video = this.props.video;
-        const name = video.namw;
+        const name = video.name;
+        // debugger;
         const description = video.description;
         const publishedAt = video.release_time;
         const statistics = {
@@ -137,17 +146,21 @@ class vimeoPlayer extends React.Component {
                     </div>
                 </div>
                 <div id="module">
-                    <a
-                        data-toggle="collapse"
-                        href="#collapseExample"
-                        role="button"
-                        aria-expanded="false"
-                        aria-controls="collapseExample"
-                    />
-
-                    <p className="collapse" id="collapseExample">
-                        <Linkify>{description}</Linkify>
+                    <p>
+                        <a
+                            data-toggle="collapse"
+                            href="#collapseExample"
+                            role="button"
+                            aria-expanded="false"
+                            aria-controls="collapseExample"
+                        >
+                            Description
+                        </a>
                     </p>
+
+                    <div className="collapse" id="collapseExample">
+                        <Linkify>{description}</Linkify>
+                    </div>
                 </div>
             </div>
         );
@@ -166,12 +179,12 @@ class vimeoPlayer extends React.Component {
     }
 
     submitChange(video) {
-        const path = `vimeo${video.uri}`;
-
-        this.props.history.push("/");
+        const path = `/vimeo${video.uri}`;
         this.props.history.push(path);
+        //debugger;
+        this.setState({ video_id: video.uri.substring(8) });
 
-        this.componentWillMount();
+        this.newPage(video.uri.substring(8));
     }
     buildVideoCard() {
         return this.props.relatedvideos.map((video, i) => {

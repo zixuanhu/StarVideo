@@ -17,11 +17,15 @@ export const mapDispatchToProps = dispatch => {
         getVideo: video_id => {
             return dispatch(getVideoAction.getVimeo(video_id));
         },
-        fetchVimeo: video_id => {
+        fetchRelatedVimeo: video_id => {
             return dispatch(searchActions.fetchRelatedVimeo(video_id));
         },
         getComment: video_id => {
             return dispatch(getCommentAction.getVimeoComment(video_id));
+        },
+
+        fetchVimeo: (keywords, page = 1) => {
+            return dispatch(searchActions.fetchVimeo(keywords, page));
         }
     };
 };

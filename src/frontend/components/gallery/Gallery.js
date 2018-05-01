@@ -14,7 +14,7 @@ class Gallery extends React.Component {
     }
 
     submitChange(video) {
-        const path = `youtube/video/${video.id.videoId}`;
+        const path = `/youtube/video/${video.id.videoId}`;
         this.props.history.push(path);
     }
     componentWillMount() {
