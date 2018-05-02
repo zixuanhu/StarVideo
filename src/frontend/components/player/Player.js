@@ -174,8 +174,17 @@ class Player extends React.Component {
     submitChange(video) {
         const path = `${video.id.videoId}`;
         this.setState({ video_id: video.id.videoId });
+        this.openNewPage(video.id.videoId);
         this.props.history.push(`/youtube/video/${path}`);
+        window.scrollTo(0, 0);
     }
+
+    openNewPage(video_id) {
+        this.props.getComment(video_id);
+        this.props.getVideo(video_id);
+        this.props.fetchRelatedVideos(video_id);
+    }
+
     buildVideoCard() {
         return this.props.relatedvideos.map((video, i) => {
             return (
