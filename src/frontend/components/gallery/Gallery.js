@@ -1,5 +1,6 @@
 import React from "react";
 import Moment from "react-moment";
+
 // import isEmpty from "lodash/isEmpty";
 class Gallery extends React.Component {
     constructor(props) {
@@ -9,6 +10,7 @@ class Gallery extends React.Component {
             keywords: ""
         };
     }
+
     MouseOver(video) {
         this.setState({
             mouseOverVideo: video
@@ -19,6 +21,7 @@ class Gallery extends React.Component {
         const path = `/youtube/video/${video.id.videoId}`;
         this.props.history.push(path);
     }
+
     componentWillMount() {
         if (this.props.videos.length === 0) {
             this.props.fetchVideos("");
@@ -59,6 +62,7 @@ class Gallery extends React.Component {
                 })
             );
     }
+
     onForwardPage(e) {
         e.preventDefault();
         this.setState({
@@ -73,126 +77,108 @@ class Gallery extends React.Component {
                 })
             );
     }
-    //需要加入mouseover
 
     buildVideoCard() {
-        //debugger;
-        let videos = [];
+        let videoCards = [];
         for (let i = 0; i < this.props.videos.length; i++) {
             const video = this.props.videos[i];
+            const image = video.snippet.thumbnails.medium.url;
+            debugger
+            videoCards.push(
+                <div
+                    key={i}
+                    className="col-sm-6 col-md-4 "
 
-            videos.push( <
-                div key = {
-                    i
-                }
-                className = "col-sm-6 col-md-4 gallery-card btn thumbnail"
-                onClick = {
-                    e => this.submitChange(video)
-                } >
-                <
-                div className = "view zoom" >
-                <
-                img className = "img-fluid "
-                src = {
-                    video.snippet.thumbnails.medium.url
-                }
-                alt = "video img" /
+                    onClick={e => this.submitChange(video)}
                 >
-                <
-                /div> <
-                div className = "gallery-card-right" >
-                <
-                h3 > {
-                    video.snippet.channelTitle
-                } < /h3> <
-                Moment fromNow > {
-                    video.snippet.publishedAt
-                } < /Moment> <
-                /div> <
-                /div>
+                    <div
+                    >
+                        <div
+                            className="card "
+                        >
+                            <div className='homeimg-box'>
+                                <img
+                                    className="homeimg "
+                                    src={image}
+                                />
+                            </div>
+                            <br/>
+                            {/*<div className="Plus">*/}
+                            {/*<span className="homePlus">PLUS</span>*/}
+                            {/*{home.room_type} · {home.property_type}*/}
+                            {/*</div>*/}
+                            <p className="hometitle">{video.snippet.channelTitle} </p>
+                            <p className="homeprice"><Moment fromNow> {video.snippet.publishedAt}</Moment></p>
+                        </div>
+                    </div>
+                </div>
             );
         }
-        return videos;
-    }
-    searchBar() {
-        return ( <
-            div className = "input-group" >
-            <
-            input type = "text"
-            className = "form-control search-input"
-            onChange = {
-                e => this.updateKeywords(e)
-            }
-            value = {
-                this.state.keywords
-            }
-            onKeyDown = {
-                e => this.keyDown(e)
-            }
-            /> <
-            span className = "input-group-btn" >
-            <
-            button className = "btn btn-default"
-            type = "button"
-            onClick = {
-                e => this.submitSearchChange(e)
-            } >
-            Search <
-            /button> <
-            /span> <
-            /div>
+        return (
+            <div>
+                {videoCards}
+            </div>
         );
     }
+
+    searchBar() {
+        return (
+            <div className="input-group">
+                <input
+                    type="text"
+                    className="form-control search-input"
+                    onChange={e => this.updateKeywords(e)}
+                    value={this.state.keywords}
+                    onKeyDown={e => this.keyDown(e)}
+                />
+                <span className="input-group-btn">
+                    <button
+                        className="btn btn-default"
+                        type="button"
+                        onClick={e => this.submitSearchChange(e)}
+                    >
+                        Search
+                    </button>
+                </span>
+            </div>
+        );
+    }
+
     pager() {
-        return ( <
-            ul className = "pager" >
-            <
-            li className = "previous btn" >
-            <
-            a onClick = {
-                e => this.onForwardPage(e)
-            } > Previous < /a> <
-            /li> <
-            li className = "next btn" >
-            <
-            a onClick = {
-                e => this.onNextPage(e)
-            } > Next < /a> <
-            /li> <
-            /ul>
+        return (
+            <ul className="pager">
+                <li className="previous btn">
+                    <a onClick={e => this.onForwardPage(e)}> Previous </a>
+                </li>
+                <li className="next btn">
+                    <a onClick={e => this.onNextPage(e)}> Next </a>
+                </li>
+            </ul>
         );
     }
 
     render() {
+        return (
+            <div className="container">
+                <div>
 
-        return ( <
-            div className = "container" >
-            <
-            div > {
-                this.searchBar()
-            } <
-            hr / > {
-                this.pager()
-            } <
-            hr / >
-            <
-            br / >
-            <
-            br / >
-            <
-            div className = "container" > {
-                this.state.shouldLoadVideo ?
-                this.buildVideoCard() :
-                    "loading..."
-            } <
-            /div> <
-            br / >
-            <
-            hr / > {
-                this.pager()
-            } <
-            /div> <
-            /div>
+                    {this.searchBar()}
+                    <hr/>
+                    {this.pager()}
+                    <hr/>
+                    <br/>
+                    <br/>
+                    <div className="container">
+
+                        {this.state.shouldLoadVideo
+                            ? this.buildVideoCard()
+                            : "loading..."}
+                    </div>
+                    <br/>
+                    <hr/>
+                    {this.pager()}
+                </div>
+            </div>
         );
     }
 }
